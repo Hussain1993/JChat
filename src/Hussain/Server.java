@@ -132,6 +132,12 @@ public class Server {
 
     public static void main(String [] args){
         int portNumber = 1500;
+        switch(args.length)
+        {
+            case 1: portNumber = Integer.parseInt(args[0]);break;
+            case 0: break;
+            default: break;
+        }
         Server server = new Server(portNumber);
         server.start();
     }
