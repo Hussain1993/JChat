@@ -100,7 +100,7 @@ public class Server {
         String messageLongForm = time + " " + message + "\n";
         if(serverGUI == null)
         {
-            System.out.println(messageLongForm);
+            System.out.print(messageLongForm);
         }
         else
         {
