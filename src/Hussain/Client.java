@@ -90,7 +90,27 @@ public class Client {
     }
 
     private void disconnect(){
-
+        try{
+            if(inputStream != null)
+            {
+                inputStream.close();
+            }
+        }
+        catch(IOException ignore){}
+        try{
+            if(outputStream != null)
+            {
+                outputStream.close();
+            }
+        }
+        catch(IOException ignore){}
+        try{
+            if(socket != null)
+            {
+                socket.close();
+            }
+        }
+        catch(IOException ignore){}
     }
 
 
