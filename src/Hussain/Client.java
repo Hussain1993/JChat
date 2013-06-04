@@ -141,7 +141,7 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         while(true)
         {
-            System.out.println("> ");
+            System.out.print("> ");
             String message = scanner.nextLine();
             if(message.equalsIgnoreCase("LOGOUT"))
             {
