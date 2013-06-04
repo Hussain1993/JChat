@@ -124,6 +124,15 @@ public class Client {
         int portNumber = 1500;
         String serverAddress = "localhost";
         String username = "Anonymous";
+        switch(args.length)
+        {   // java Client username portNumber serverAddress
+            case 3: serverAddress = args[2];
+            case 2: portNumber = Integer.parseInt(args[1]);
+            case 1: username = args[0];
+            case 0: break;
+            default: System.out.println("Usage is: > java Client [username] [portNumber] {serverAddress]");
+                return;
+        }
         Client client = new Client(serverAddress,username,portNumber);
         if(!client.start())
         {
@@ -150,17 +159,6 @@ public class Client {
         }
         client.disconnect();
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     class ListenFromServer extends Thread{
