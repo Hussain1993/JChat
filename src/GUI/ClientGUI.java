@@ -125,8 +125,8 @@ public class ClientGUI extends JFrame implements ActionListener {
         }
         if(connected)
         {
-            client.sendMessage(new ChatMessage(ChatMessage.MESSAGE,chatArea.getText()));
-            chatArea.setText("");
+            client.sendMessage(new ChatMessage(ChatMessage.MESSAGE,textField.getText()));
+            textField.setText("");
             return;
         }
         if(o == loginInButton)
