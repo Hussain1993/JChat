@@ -80,6 +80,15 @@ public class Client {
         }
     }
 
+    protected void sendMessage(ChatMessage message){
+        try{
+            outputStream.writeObject(message);
+        }
+        catch(IOException exception){
+            display("Exception writing to server: " + exception);
+        }
+    }
+
     private void disconnect(){
 
     }
