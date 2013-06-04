@@ -91,7 +91,7 @@ public class Server {
         }
         else
         {
-            //TODO Come back to this
+            serverGUI.appendEvent(time+"\n");
         }
     }
 
@@ -104,7 +104,7 @@ public class Server {
         }
         else
         {
-            //TODO come back to this
+            serverGUI.appendRoom(messageLongForm);
         }
         for(int i = clientThreads.size(); --i >= 0;)
         {

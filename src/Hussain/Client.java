@@ -77,11 +77,11 @@ public class Client {
         }
         else
         {
-            //TODO Come back to this
+            clientGUI.append(message+"\n");
         }
     }
 
-    protected void sendMessage(ChatMessage message){
+    public void sendMessage(ChatMessage message){
         try{
             outputStream.writeObject(message);
         }
@@ -115,7 +115,7 @@ public class Client {
 
         if(clientGUI != null)
         {
-            //TODO come back to this
+            clientGUI.connectionFailed();
         }
     }
 
@@ -175,7 +175,7 @@ public class Client {
                    }
                    else
                    {
-                       //TODO come back to this
+                       clientGUI.append(message);
                    }
                }
                catch(ClassNotFoundException ignore){}
@@ -183,7 +183,7 @@ public class Client {
                    display("Server has close the connection: " + exception);
                    if(clientGUI != null)
                    {
-                       //TODO come back to this
+                       clientGUI.connectionFailed();
                    }
                    break;
                }

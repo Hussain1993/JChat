@@ -93,12 +93,12 @@ public class ServerGUI extends JFrame implements ActionListener {
         appendEvent("The server has been started.\n");
     }
 
-    protected void appendRoom(String string){
+    public void appendRoom(String string){
         chatArea.append(string);
         chatArea.setCaretPosition(chatArea.getText().length() - 1);
     }
 
-    protected void appendEvent(String string){
+    public void appendEvent(String string){
         eventArea.append(string);
         eventArea.setCaretPosition(chatArea.getText().length() - 1);
     }
