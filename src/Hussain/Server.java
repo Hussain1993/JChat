@@ -188,9 +188,22 @@ public class Server {
                 String message = chatMessage.getMessage();
                 switch(chatMessage.getType())
                 {
-                    case ChatMessage.MESSAGE:
+                    case ChatMessage.MESSAGE: broadcast(username + ": " + message);
+                        break;
+                    case ChatMessage.LOGOUT: broadcast(username + " disconnected with a LOGOUT message.");
+                        keepGoing = false;
+                        break;
+                    case ChatMessage.WHOISIN: writeMessage("List of users connected at "+simpleDateFormat.format(new Date()) + "\n");
+                        for(int i = 0; i < clientThreads.size(); ++i)
+                        {
+                           ClientThread ct = clientThreads.get(i);
+                           writeMessage((i+1) + ") " + ct.username + " since " + ct.date);
+                        }
+                        break;
                 }
             }
+            remove(id);
+            close();
         }
 
         private boolean writeMessage(String message){
