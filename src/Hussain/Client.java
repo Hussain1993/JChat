@@ -4,6 +4,7 @@ import GUI.ClientGUI;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -116,6 +117,38 @@ public class Client {
         {
             //TODO come back to this
         }
+    }
+
+    public static void main(String [] args){
+        //default values
+        int portNumber = 1500;
+        String serverAddress = "localhost";
+        String username = "Anonymous";
+        Client client = new Client(serverAddress,username,portNumber);
+        if(!client.start())
+        {
+           return;
+        }
+        Scanner scanner = new Scanner(System.in);
+        while(true)
+        {
+            System.out.println("> ");
+            String message = scanner.nextLine();
+            if(message.equalsIgnoreCase("LOGOUT"))
+            {
+                client.sendMessage(new ChatMessage(ChatMessage.LOGOUT,""));
+                break;
+            }
+            else if(message.equalsIgnoreCase("WHOISIN"))
+            {
+                client.sendMessage(new ChatMessage(ChatMessage.WHOISIN,""));
+            }
+            else
+            {
+                client.sendMessage(new ChatMessage(ChatMessage.MESSAGE,message));
+            }
+        }
+        client.disconnect();
     }
 
 

@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class ChatMessage implements Serializable {
     protected static final long serialVersionUID = 1112122200L;
 
-    protected static final int WHOIS = 0;
+    protected static final int WHOISIN = 0;
     protected static final int MESSAGE = 1;
     protected static final int LOGOUT = 2;
 
