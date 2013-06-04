@@ -111,6 +111,11 @@ public class Client {
             }
         }
         catch(IOException ignore){}
+
+        if(clientGUI != null)
+        {
+            //TODO come back to this
+        }
     }
 
 
