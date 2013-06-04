@@ -35,4 +35,95 @@ public class Client {
         this(server,username,port,null);
     }
 
+    public boolean start(){
+        //try to connect to the server
+        try{
+           socket = new Socket(server,port);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        String message = "Connection Accepted: "+ socket.getInetAddress() + ": "+socket.getPort();
+        display(message);
+        //try to create both data streams
+        try{
+            inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+        }
+        catch(IOException exception){
+            display("Exception creating new Input/output Streams: " + exception);
+            return false;
+        }
+        new ListenFromServer().start();
+        try{
+            outputStream.writeObject(username);
+        }
+        catch(IOException exception){
+            display("Exception doing login : " + exception);
+            disconnect();
+            return false;
+        }
+        return true;
+    }
+
+    private void display(String message){
+        if(clientGUI == null)
+        {
+            System.out.println(message);
+        }
+        else
+        {
+            //TODO Come back to this
+        }
+    }
+
+    private void disconnect(){
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    class ListenFromServer extends Thread{
+        @Override
+        public void run(){
+           while(true)
+           {
+               try{
+                   String message = (String)inputStream.readObject();
+                   if(clientGUI == null)
+                   {
+                       System.out.println(message);
+                       System.out.println("> ");
+                   }
+                   else
+                   {
+                       //TODO come back to this
+                   }
+               }
+               catch(ClassNotFoundException ignore){}
+               catch(IOException exception){
+                   display("Server has close the connection: " + exception);
+                   if(clientGUI != null)
+                   {
+                       //TODO come back to this
+                   }
+                   break;
+               }
+           }
+        }
+    }
+
 }
