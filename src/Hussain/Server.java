@@ -74,7 +74,7 @@ public class Server {
         }
     }
 
-    protected void stop(){
+    public void stop(){
         keepGoing = false;
         try{
             new Socket("localhost",port);
