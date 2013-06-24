@@ -22,49 +22,53 @@ public class ServerGUI extends JFrame implements ActionListener {
     private JTextArea chatArea;
     private JTextArea eventArea;
     private JTextField portNumberField;
+    private JPanel northPanel;
+    private JPanel centrePanel;
 
     private Server server;
+    int portNumber;
 
     public ServerGUI(int portNumber){
         super("Chat Server");
         server = null;
-        JPanel northPanel = new JPanel();
-        northPanel.add(new JLabel("Port Number: "));
-        portNumberField = new JTextField(" "+portNumber);
-        northPanel.add(portNumberField);
-        startStopButton = new JButton("Start");
-        startStopButton.addActionListener(this);
-        northPanel.add(startStopButton);
-        add(northPanel, BorderLayout.NORTH);
-
-        JPanel centrePanel = new JPanel(new GridLayout(2,1));
-        chatArea = new JTextArea(80,80);
-        chatArea.setEditable(false);
+        this.portNumber = portNumber;
+        initWidgets();
+        setLayout();
+        addWidgets();
         appendRoom("Chat Room. \n");
-        centrePanel.add(new JScrollPane(chatArea));
-        eventArea = new JTextArea(80,80);
-        eventArea.setEditable(false);
         appendEvent("Events Logs. \n");
-        centrePanel.add(new JScrollPane(eventArea));
-        add(centrePanel,BorderLayout.CENTER);
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent windowEvent) {
-                if(server !=  null)
-                {
-                    try{
-                        server.stop();
-                    }
-                    catch(Exception ignore){}
-                    server = null;
-                }
-                ServerGUI.this.dispose();
-                System.exit(0);
-            }
-        });
+        windowListener();
         setSize(new Dimension(400,600));
         setVisible(true);
+    }
+
+    private void initWidgets(){
+        northPanel = new JPanel();
+        northPanel.add(new JLabel("Port Number: "));
+
+        portNumberField = new JTextField(" "+portNumber);
+        northPanel.add(portNumberField);
+
+        startStopButton = new JButton("Start");
+        startStopButton.addActionListener(this);
+
+        chatArea = new JTextArea(80,80);
+        chatArea.setEditable(false);
+
+        eventArea = new JTextArea(80,80);
+        eventArea.setEditable(false);
+    }
+
+    private void setLayout(){
+         centrePanel = new JPanel(new GridLayout(2,1));
+    }
+
+    private void addWidgets(){
+        northPanel.add(startStopButton);
+        add(northPanel, BorderLayout.NORTH);
+        centrePanel.add(new JScrollPane(chatArea));
+        centrePanel.add(new JScrollPane(eventArea));
+        add(centrePanel,BorderLayout.CENTER);
     }
 
     @Override
@@ -101,6 +105,24 @@ public class ServerGUI extends JFrame implements ActionListener {
     public void appendEvent(String string){
         eventArea.append(string);
         eventArea.setCaretPosition(chatArea.getText().length() - 1);
+    }
+
+    private void windowListener(){
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                if(server !=  null)
+                {
+                    try{
+                        server.stop();
+                    }
+                    catch(Exception ignore){}
+                    server = null;
+                }
+                ServerGUI.this.dispose();
+                System.exit(0);
+            }
+        });
     }
 
     public static void main(String [] args){
