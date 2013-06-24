@@ -30,6 +30,11 @@ public class ClientGUI extends JFrame implements ActionListener {
 
     private JTextArea chatArea;
 
+    private JPanel northPanel;
+    private JPanel serverAndPort;
+    private JPanel centerPanel;
+    private JPanel southPanel;
+
     private boolean connected;
 
     private Client client;
@@ -41,33 +46,29 @@ public class ClientGUI extends JFrame implements ActionListener {
         super("Chat Client");
         defaultPortNumber = portNumber;
         defaultHost = host;
+        initWidgets();
+        addWidgets();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(new Dimension(600,600));
+        setVisible(true);
+        textField.requestFocus();
+    }
 
-        JPanel northPanel = new JPanel(new GridLayout(3,1));
-        JPanel serverAndPort =  new JPanel(new GridLayout(1,5,1,3));
-        serverField = new JTextField(host);
-        portNumberField = new JTextField(""+portNumber);
+    private void initWidgets(){
+        northPanel = new JPanel(new GridLayout(3,1));
+        serverAndPort =  new JPanel(new GridLayout(1,5,1,3));
+        serverField = new JTextField(defaultHost);
+        portNumberField = new JTextField(""+defaultPortNumber);
         portNumberField.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        serverAndPort.add(new JLabel("Server Address: "));
-        serverAndPort.add(serverField);
-        serverAndPort.add(new JLabel("Port Number: "));
-        serverAndPort.add(portNumberField);
-        serverAndPort.add(new JLabel(""));
-
-        northPanel.add(serverAndPort);
-
         label = new JLabel("Enter your username below,",SwingConstants.CENTER);
-        northPanel.add(label);
+
         textField = new JTextField("Anonymous");
         textField.setBackground(Color.WHITE);
-        northPanel.add(textField);
-        add(northPanel,BorderLayout.NORTH);
 
         chatArea = new JTextArea("Welcome to the Chat Room\n",80,80);
-        JPanel centerPanel = new JPanel(new GridLayout(1,1));
-        centerPanel.add(new JScrollPane(chatArea));
         chatArea.setEditable(false);
-        add(centerPanel,BorderLayout.CENTER);
+
+        centerPanel = new JPanel(new GridLayout(1,1));
 
         loginInButton = new JButton("Login");
         loginInButton.addActionListener(this);
@@ -78,16 +79,30 @@ public class ClientGUI extends JFrame implements ActionListener {
         whoIsInButton.addActionListener(this);
         whoIsInButton.setEnabled(false);
 
-        JPanel southPanel = new JPanel();
+        southPanel = new JPanel();
+    }
+
+    private void addWidgets(){
+        serverAndPort.add(new JLabel("Server Address: "));
+        serverAndPort.add(serverField);
+        serverAndPort.add(new JLabel("Port Number: "));
+        serverAndPort.add(portNumberField);
+        serverAndPort.add(new JLabel(""));
+
+        northPanel.add(serverAndPort);
+        northPanel.add(label);
+
+        northPanel.add(textField);
+        add(northPanel,BorderLayout.NORTH);
+
+        centerPanel.add(new JScrollPane(chatArea));
+
+        add(centerPanel,BorderLayout.CENTER);
+
         southPanel.add(loginInButton);
         southPanel.add(logOutButton);
         southPanel.add(whoIsInButton);
         add(southPanel,BorderLayout.SOUTH);
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(new Dimension(600,600));
-        setVisible(true);
-        textField.requestFocus();
     }
 
     public void append(String string){
@@ -146,7 +161,7 @@ public class ClientGUI extends JFrame implements ActionListener {
             {
                 return;
             }
-            int port = 0;
+            int port;
             try{
                port = Integer.parseInt(portNumber);
             }
